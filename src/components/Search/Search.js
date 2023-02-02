@@ -11,10 +11,10 @@ const Search = () => {
   };
 
   return (
-    <React.Fragment>
+    <div className="search">
       <SearchBar unit={unit} />
       <Units onUnitChange={unitChangeHandler} />
-    </React.Fragment>
+    </div>
   );
 };
 

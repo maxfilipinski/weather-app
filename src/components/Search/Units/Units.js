@@ -14,6 +14,7 @@ const Units = (props) => {
 
   return (
     <ToggleButtonGroup
+      className="search-actions"
       color="primary"
       value={unit}
       exclusive
