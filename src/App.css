@@ -1,7 +1,30 @@
-.app-window {
+.app {
   margin: auto;
-  max-width: 25vw;
+  max-width: 480px;
+  height: 640px;
   border: solid 1px black;
   padding-bottom: 50px;
-  background: lightblue;
+  background-size: cover;
+  background-position: bottom;
+  transition: 0.5 ease;
+}
+
+.app.sunny {
+    background-image: url('./assets/sunny.jpg');
+}
+
+.app.cloudy {
+    background-image: url('./assets/cloudy.jpg');
+}
+
+.app.rainy {
+    background-image: url('./assets/rainy.jpg');
+}
+
+.app.snowy {
+    background-image: url('./assets/snowy.jpg');
+}
+
+.app.foggy {
+    background-image: url('./assets/foggy.jpg');
 }

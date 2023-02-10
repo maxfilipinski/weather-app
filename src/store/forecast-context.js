@@ -7,7 +7,7 @@ const ForecastContext = React.createContext({
     name: '',
     rain: {},
     visibility: 0,
-    weather: [],
+    weather: [{ main: '' }],
     wind: {},
     sys: {},
   },

@@ -8,8 +8,9 @@ const defaultForecastState = {
     name: '',
     rain: {},
     visibility: -1,
-    weather: [],
+    weather: [{ main: '' }],
     wind: {},
+    sys: {},
   },
 };
 

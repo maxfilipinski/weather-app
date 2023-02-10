@@ -1,12 +1,15 @@
 import './Weather.css';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import ForecastContext from '../../store/forecast-context';
 
-const Weather = () => {
+const Weather = (props) => {
   const forecastCtx = useContext(ForecastContext);
-
   const temperature = forecastCtx.data.main.temp;
   const weather = forecastCtx.data.weather[0]?.main;
+
+  useEffect(() => {
+    props.onWeatherChange(weather);
+  }, [weather]);
 
   return (
     <div className="weather">
