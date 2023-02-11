@@ -1,9 +1,11 @@
-import './SearchBar.css';
+import '../Search.css';
 import config from '../../../config.json';
 import { useContext, useEffect, useState } from 'react';
 import ForecastContext from '../../../store/forecast-context';
+import AppContext from '../../../store/app-context';
 
 const SearchBar = (props) => {
+  const appCtx = useContext(AppContext);
   const forecastCtx = useContext(ForecastContext);
   const [query, setQuery] = useState('');
 
@@ -23,6 +25,7 @@ const SearchBar = (props) => {
   }, []);
 
   const fetchData = (location = {}) => {
+    appCtx.setIsLoading(true);
     const url =
       location.lat && location.lon
         ? `${config.API_URL}?lat=${location.lat}&lon=${location.lon}&units=${props.unit}&appid=${config.API_KEY}`
@@ -31,9 +34,8 @@ const SearchBar = (props) => {
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         forecastCtx.setForecast(res);
-        console.log(forecastCtx.data);
+        appCtx.setIsLoading(false);
         setQuery('');
       });
   };
