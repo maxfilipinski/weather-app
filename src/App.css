@@ -6,7 +6,18 @@
   padding-bottom: 50px;
   background-size: cover;
   background-position: bottom;
-  transition: 0.5 ease;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.app .main {
+    flex-grow: 1;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .app.sunny {

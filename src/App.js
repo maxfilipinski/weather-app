@@ -38,15 +38,19 @@ function App() {
   return (
     <ForecastProvider>
       <div className={`app ${weatherClassName}`}>
-        <Search />
-        {!isLoading ? (
-          <>
-            <Location />
-            <Weather onWeatherChange={weatherChangeHandler} />
-          </>
-        ) : (
-          <Spinner loading={isLoading} />
-        )}
+        <div className="header">
+          <Search />
+        </div>
+        <div className="main">
+          {!isLoading ? (
+            <>
+              <Location />
+              <Weather onWeatherChange={weatherChangeHandler} />
+            </>
+          ) : (
+            <Spinner loading={isLoading} />
+          )}
+        </div>
       </div>
     </ForecastProvider>
   );

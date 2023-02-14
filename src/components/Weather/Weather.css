@@ -10,7 +10,7 @@
     border-radius: 18px;
     padding: 15px 25px;
     color: white;
-    font-size: 80px;
+    font-size: 100px;
     font-weight: 800;
     text-align: center;
     text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
@@ -19,7 +19,7 @@
 
 .weather .info {
     color: white;
-    font-size: 40px;
+    font-size: 55px;
     font-weight: 700;
     text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
 }
