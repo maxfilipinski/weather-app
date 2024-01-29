@@ -1,28 +1,27 @@
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import {
+  ForecastContext,
+  TempUnitType,
+} from 'src/renderer/context/forecastContext';
 
-const Units = (props) => {
-  const [unit, setUnit] = useState('metric');
+const Units = () => {
+  const forecastCtx = useContext(ForecastContext);
 
-  const unitChangeHandler = (event, newUnit) => {
-    if (newUnit !== null) setUnit(newUnit);
-
-    props.onUnitChange(newUnit);
+  const onUnitChangeHandler = (event: SelectChangeEvent) => {
+    forecastCtx.setTempUnit(event.target.value as TempUnitType);
   };
 
   return (
-    <ToggleButtonGroup
-      className="search-actions"
-      color="primary"
-      value={unit}
-      exclusive
-      onChange={unitChangeHandler}
-      aria-label="Units"
+    <Select
+      id="temp-units"
+      value={forecastCtx.tempUnit}
+      onChange={onUnitChangeHandler}
     >
-      <ToggleButton value="metric">Metric</ToggleButton>
-      <ToggleButton value="imperial">Imperial</ToggleButton>
-    </ToggleButtonGroup>
+      <MenuItem value={'metric'}>°C</MenuItem>
+      <MenuItem value={'imperial'}>°F</MenuItem>
+      <MenuItem value={'standard'}>°K</MenuItem>
+    </Select>
   );
 };
 

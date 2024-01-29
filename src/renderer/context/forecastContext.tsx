@@ -35,9 +35,13 @@ type ForecastType = {
   };
 };
 
+export type TempUnitType = 'metric' | 'imperial' | '';
+
 type ForecastContextType = {
   forecast: ForecastType;
+  tempUnit: TempUnitType;
   setForecast: (data: ForecastType) => void;
+  setTempUnit: (data: TempUnitType) => void;
 };
 
 const defaultForecast = {
@@ -78,14 +82,19 @@ const defaultForecast = {
 
 export const ForecastContext = createContext<ForecastContextType>({
   forecast: defaultForecast,
+  tempUnit: 'metric',
   setForecast: (data: ForecastType) => {},
+  setTempUnit: (data: TempUnitType) => {},
 });
 
 export function ForecastContextProvider({ children }: ContextProviderProps) {
   const [forecast, setForecast] = useState<ForecastType>(defaultForecast);
+  const [tempUnit, setTempUnit] = useState<TempUnitType>('metric');
 
   return (
-    <ForecastContext.Provider value={{ forecast, setForecast }}>
+    <ForecastContext.Provider
+      value={{ forecast, tempUnit, setForecast, setTempUnit }}
+    >
       {children}
     </ForecastContext.Provider>
   );

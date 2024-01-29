@@ -3,8 +3,9 @@ import { useContext, useState } from 'react';
 import { AppContext } from './context/appContext';
 import { Location } from 'src/renderer/components/location/location';
 import { Weather } from 'src/renderer/components/weather/weather';
-import { Search } from 'src/renderer/components/search/search';
+import Search from 'src/renderer/components/search/search';
 import { ForecastContextProvider } from 'src/renderer/context/forecastContext';
+import Units from './components/units/units';
 
 function App() {
   const [weatherClassName, setWeatherClassName] = useState('');
@@ -39,6 +40,7 @@ function App() {
       <div className={`app ${weatherClassName}`}>
         <div className="header">
           <Search />
+          <Units />
         </div>
         <div className="main">
           {!isLoading ? (
