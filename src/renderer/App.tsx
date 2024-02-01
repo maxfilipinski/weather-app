@@ -2,7 +2,7 @@ import './App.css';
 import { useContext, useState } from 'react';
 import { AppContext } from './context/appContext';
 import { Location } from 'src/renderer/components/location/location';
-import { Weather } from 'src/renderer/components/weather/weather';
+import { CurrentWeather } from 'src/renderer/components/weather/currentWeather';
 import Search from 'src/renderer/components/search/search';
 import { ForecastContextProvider } from 'src/renderer/context/forecastContext';
 import Units from './components/units/units';
@@ -46,7 +46,7 @@ function App() {
           {!isLoading ? (
             <>
               <Location />
-              <Weather onWeatherChange={weatherChangeHandler} />
+              <CurrentWeather />
             </>
           ) : (
             <span>loading...</span>

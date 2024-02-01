@@ -22,6 +22,7 @@ type ForecastType = {
   weather: {
     main: string;
     description: string;
+    icon: string;
   }[];
   wind: {
     speed: number;
@@ -35,7 +36,12 @@ type ForecastType = {
   };
 };
 
-export type TempUnitType = 'metric' | 'imperial' | '';
+export type TempUnitType = 'metric' | 'imperial' | 'standard';
+export const TempUnitSymbol: { [unit: string]: string } = {
+  metric: '°C',
+  imperial: '°F',
+  standard: '°K',
+};
 
 type ForecastContextType = {
   forecast: ForecastType;

@@ -1,5 +1,7 @@
+import { Typography } from '@mui/material';
 import { useContext } from 'react';
 import { ForecastContext } from 'src/renderer/context/forecastContext';
+import { LocationCity } from '@mui/icons-material';
 
 export const Location = () => {
   const forecastCtx = useContext(ForecastContext);
@@ -10,6 +12,17 @@ export const Location = () => {
       : '';
 
   return (
-    <div className="location">{location !== '' && <div>{location}</div>}</div>
+    <Typography
+      variant="h6"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '8px',
+      }}
+    >
+      <LocationCity />
+      {location}
+    </Typography>
   );
 };
