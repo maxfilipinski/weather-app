@@ -4,7 +4,6 @@ import { ForecastContext } from 'src/renderer/context/forecastContext';
 import * as config from 'src/renderer/config';
 import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
 
 const Search = () => {
   const appCtx = useContext(AppContext);
@@ -62,11 +61,6 @@ const Search = () => {
         startAdornment: (
           <InputAdornment position="start">
             <SearchIcon />
-          </InputAdornment>
-        ),
-        endAdornment: (
-          <InputAdornment position="end">
-            <LocationSearchingIcon />
           </InputAdornment>
         ),
       }}

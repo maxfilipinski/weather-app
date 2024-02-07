@@ -7,8 +7,9 @@ export const Location = () => {
   const forecastCtx = useContext(ForecastContext);
 
   const location =
-    forecastCtx.forecast.name && forecastCtx.forecast.sys?.country
-      ? `${forecastCtx.forecast.name}, ${forecastCtx.forecast.sys?.country}`
+    forecastCtx.currentWeatherData.name &&
+    forecastCtx.currentWeatherData.sys?.country
+      ? `${forecastCtx.currentWeatherData.name}, ${forecastCtx.currentWeatherData.sys?.country}`
       : '';
 
   return (

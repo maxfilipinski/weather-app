@@ -1,22 +1,26 @@
 import { createContext, useState } from 'react';
 import { ContextProviderProps } from '../data/types';
 
-type ForecastType = {
+type CurrentWeatherDataType = {
   clouds: { all: number };
   main: {
     temp: number;
-    feelsLike: number;
-    tempMin: number;
-    tempMax: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
     pressure: number;
     humidity: number;
-    seaLevel: number;
-    grndLevel: number;
+    sea_level: number;
+    grnd_level: number;
   };
   name: string;
   rain: {
-    oneH: number;
-    threeH: number;
+    '1h': number;
+    '3h': number;
+  };
+  snow: {
+    '1h': number;
+    '3h': number;
   };
   visibility: number;
   weather: {
@@ -44,9 +48,9 @@ export const TempUnitSymbol: { [unit: string]: string } = {
 };
 
 type ForecastContextType = {
-  forecast: ForecastType;
+  currentWeatherData: CurrentWeatherDataType;
   tempUnit: TempUnitType;
-  setForecast: (data: ForecastType) => void;
+  setForecast: (data: CurrentWeatherDataType) => void;
   setTempUnit: (data: TempUnitType) => void;
 };
 
@@ -54,24 +58,29 @@ const defaultForecast = {
   clouds: { all: 0 },
   main: {
     temp: 0,
-    feelsLike: 0,
-    tempMin: 0,
-    tempMax: 0,
+    feels_like: 0,
+    temp_min: 0,
+    temp_max: 0,
     pressure: 0,
     humidity: 0,
-    seaLevel: 0,
-    grndLevel: 0,
+    sea_level: 0,
+    grnd_level: 0,
   },
   name: '',
   rain: {
-    oneH: 0,
-    threeH: 0,
+    '1h': 0,
+    '3h': 0,
+  },
+  snow: {
+    '1h': 0,
+    '3h': 0,
   },
   visibility: 0,
   weather: [
     {
       main: '',
       description: '',
+      icon: '',
     },
   ],
   wind: {
@@ -87,19 +96,25 @@ const defaultForecast = {
 };
 
 export const ForecastContext = createContext<ForecastContextType>({
-  forecast: defaultForecast,
+  currentWeatherData: defaultForecast,
   tempUnit: 'metric',
-  setForecast: (data: ForecastType) => {},
+  setForecast: (data: CurrentWeatherDataType) => {},
   setTempUnit: (data: TempUnitType) => {},
 });
 
 export function ForecastContextProvider({ children }: ContextProviderProps) {
-  const [forecast, setForecast] = useState<ForecastType>(defaultForecast);
+  const [forecast, setForecast] =
+    useState<CurrentWeatherDataType>(defaultForecast);
   const [tempUnit, setTempUnit] = useState<TempUnitType>('metric');
 
   return (
     <ForecastContext.Provider
-      value={{ forecast, tempUnit, setForecast, setTempUnit }}
+      value={{
+        currentWeatherData: forecast,
+        tempUnit,
+        setForecast,
+        setTempUnit,
+      }}
     >
       {children}
     </ForecastContext.Provider>
