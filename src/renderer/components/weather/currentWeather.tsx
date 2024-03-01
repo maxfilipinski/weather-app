@@ -1,13 +1,13 @@
 import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { useContext } from 'react';
 import {
-  ForecastContext,
+  WeatherContext,
   TempUnitSymbol,
-} from 'src/renderer/context/forecastContext';
+} from 'src/renderer/context/weatherContext';
 import NorthIcon from '@mui/icons-material/North';
 
 export const CurrentWeather = () => {
-  const forecastCtx = useContext(ForecastContext);
+  const forecastCtx = useContext(WeatherContext);
   const weather = forecastCtx.currentWeatherData.weather[0];
   const temperature = Math.round(forecastCtx.currentWeatherData.main.temp);
   const tempFeelsLike = Math.round(
@@ -16,7 +16,6 @@ export const CurrentWeather = () => {
   const tempMax = Math.round(forecastCtx.currentWeatherData.main.temp_max);
   const tempMin = Math.round(forecastCtx.currentWeatherData.main.temp_min);
   const tempUnit = TempUnitSymbol[forecastCtx.tempUnit];
-  const cloudiness = forecastCtx.currentWeatherData.clouds.all;
   const windSpeed =
     forecastCtx.tempUnit === 'imperial'
       ? `${forecastCtx.currentWeatherData.wind.speed} mph`
@@ -30,118 +29,100 @@ export const CurrentWeather = () => {
     <Card>
       <CardHeader
         title={<Typography>Current weather</Typography>}
-        sx={{ paddingBottom: '0px' }}
+        sx={{ paddingBottom: 0 }}
       />
-      <CardContent>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      <CardContent sx={{ padding: '16px !important' }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}
+        >
           <img
             src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+            style={{ margin: '-10px' }}
           />
-          <Typography variant="h2">{temperature}</Typography>
-          <Typography variant="h4">{tempUnit}</Typography>
-          <Typography variant="h3" sx={{ marginLeft: '32px' }}>
-            {weather.main}
+          <Typography variant="h3">{temperature}</Typography>
+          <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+            {tempUnit}
           </Typography>
-        </div>
-        <table style={{ width: '100%', textAlign: 'center' }}>
-          <tr>
-            <th>
+          <Box sx={{ display: 'block', marginLeft: '2rem' }}>
+            <Typography variant="h6">{weather.main}</Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: '0.5rem' }}>
               <Typography fontSize="0.9em" color="text.secondary">
                 Feels like
               </Typography>
-            </th>
-            <th>
-              <Typography fontSize="0.9em" color="text.secondary">
-                Temp. max
-              </Typography>
-            </th>
-            <th>
-              <Typography fontSize="0.9em" color="text.secondary">
-                Temp. min
-              </Typography>
-            </th>
-            <th>
-              <Typography fontSize="0.9em" color="text.secondary">
-                Cloudiness
-              </Typography>
-            </th>
-          </tr>
-          <tr>
-            <td>
-              <Box sx={{ fontWeight: 'bold' }}>
+              <Typography fontSize="0.9em" sx={{ fontWeight: 'bold' }}>
                 {tempFeelsLike}
                 {tempUnit}
-              </Box>
-            </td>
-            <td>
-              <Box sx={{ fontWeight: 'bold' }}>
-                {tempMax}
-                {tempUnit}
-              </Box>
-            </td>
-            <td>
-              <Box sx={{ fontWeight: 'bold' }}>
-                {tempMin}
-                {tempUnit}
-              </Box>
-            </td>
-            <td>
-              <Box sx={{ fontWeight: 'bold' }}>{cloudiness}%</Box>
-            </td>
-          </tr>
-          <tr>
-            <th>
-              <Typography fontSize="0.9em" color="text.secondary">
-                Wind
               </Typography>
-            </th>
-            <th>
-              <Typography fontSize="0.9em" color="text.secondary">
-                Pressure
-              </Typography>
-            </th>
-            <th>
-              <Typography fontSize="0.9em" color="text.secondary">
-                Humidity
-              </Typography>
-            </th>
-            <th>
-              <Typography fontSize="0.9em" color="text.secondary">
-                Visibility
-              </Typography>
-            </th>
-          </tr>
-          <tr>
-            <td>
-              <Box
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: '1rem',
+            textAlign: 'center',
+          }}
+        >
+          <Box>
+            <Typography fontSize="0.8em" color="text.secondary">
+              Temp. max
+            </Typography>
+            <Box sx={{ fontWeight: 'bold' }}>
+              {tempMax}
+              {tempUnit}
+            </Box>
+          </Box>
+          <Box>
+            <Typography fontSize="0.8em" color="text.secondary">
+              Temp. min
+            </Typography>
+            <Box sx={{ fontWeight: 'bold' }}>
+              {tempMin}
+              {tempUnit}
+            </Box>
+          </Box>
+          <Box>
+            <Typography fontSize="0.8em" color="text.secondary">
+              Wind
+            </Typography>
+            <Box
+              sx={{
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '0.1rem',
+              }}
+            >
+              {windSpeed}
+              <NorthIcon
+                fontSize="inherit"
                 sx={{
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  gap: '2px',
+                  transform: `rotate(${180 + forecastCtx.currentWeatherData.wind.deg}deg)`,
                 }}
-              >
-                {windSpeed}
-                <NorthIcon
-                  fontSize="inherit"
-                  sx={{
-                    transform: `rotate(${180 + forecastCtx.currentWeatherData.wind.deg}deg)`,
-                  }}
-                />
-              </Box>
-            </td>
-            <td>
-              <Box sx={{ fontWeight: 'bold' }}>{main.pressure} hPa</Box>
-            </td>
-            <td>
-              <Box sx={{ fontWeight: 'bold' }}>{main.humidity}%</Box>
-            </td>
-            <td>
-              <Box sx={{ fontWeight: 'bold' }}>{visibility} km</Box>
-            </td>
-          </tr>
-        </table>
+              />
+            </Box>
+          </Box>
+          <Box>
+            <Typography fontSize="0.8em" color="text.secondary">
+              Pressure
+            </Typography>
+            <Box sx={{ fontWeight: 'bold' }}>{main.pressure} hPa</Box>
+          </Box>
+          <Box>
+            <Typography fontSize="0.8em" color="text.secondary">
+              Humidity
+            </Typography>
+            <Box sx={{ fontWeight: 'bold' }}>{main.humidity}%</Box>
+          </Box>
+          <Box>
+            <Typography fontSize="0.8em" color="text.secondary">
+              Visibility
+            </Typography>
+            <Box sx={{ fontWeight: 'bold' }}>{visibility} km</Box>
+          </Box>
+        </Box>
       </CardContent>
     </Card>
   );

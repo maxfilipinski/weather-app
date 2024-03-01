@@ -1,29 +1,57 @@
-import { useContext, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react';
 import { AppContext } from 'src/renderer/context/appContext';
-import { ForecastContext } from 'src/renderer/context/forecastContext';
+import { WeatherContext } from 'src/renderer/context/weatherContext';
 import * as config from 'src/renderer/config';
-import { TextField, InputAdornment } from '@mui/material';
+import { styled, alpha, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const Search = () => {
+export default function Search() {
   const appCtx = useContext(AppContext);
-  const forecastCtx = useContext(ForecastContext);
+  const forecastCtx = useContext(WeatherContext);
   const [query, setQuery] = useState('');
 
-  //   useEffect(() => {
-  //     const success = (location) => {
-  //       fetchData({
-  //         lat: location.coords.latitude,
-  //         lon: location.coords.longitude,
-  //       });
-  //     };
+  const SearchBase = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+    minHeight: '40px',
+  }));
 
-  //     const error = () => {
-  //       alert('Cannot fetch current location');
-  //     };
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
 
-  //     navigator.geolocation.getCurrentPosition(success, error);
-  //   }, []);
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    width: '100%',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      [theme.breakpoints.up('sm')]: {
+        width: '12ch',
+        '&:focus': {
+          width: '20ch',
+        },
+      },
+    },
+  }));
 
   const fetchData = (location = { lat: 0, lon: 0 }) => {
     appCtx.setIsLoading(true);
@@ -36,38 +64,33 @@ const Search = () => {
       .then((res) => res.json())
       .then((res) => {
         appCtx.setIsLoading(false);
-        forecastCtx.setForecast(res);
+        forecastCtx.setWeather(res);
         setQuery('');
       });
   };
 
-  const onKeyDownHandler = (event) => {
+  const onKeyDownHandler = (event: KeyboardEvent) => {
     if (event.key === 'Enter' && query.trim().length !== 0) {
       fetchData();
     }
   };
 
-  const onChangeHandler = (event) => {
+  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   };
 
   return (
-    <TextField
-      id="search"
-      variant="outlined"
-      placeholder="Search city"
-      value={query}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-      onKeyDown={onKeyDownHandler}
-      onChange={onChangeHandler}
-    />
+    <SearchBase>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInputBase
+        placeholder="Search…"
+        inputProps={{ 'aria-label': 'search' }}
+        value={query}
+        onKeyDown={onKeyDownHandler}
+        onChange={onChangeHandler}
+      />
+    </SearchBase>
   );
-};
-
-export default Search;
+}

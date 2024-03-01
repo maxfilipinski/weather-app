@@ -1,33 +1,37 @@
 import './App.css';
-import { useContext } from 'react';
-import { AppContext } from './context/appContext';
+import { useContext, useEffect } from 'react';
+import AppContextProvider, { AppContext } from './context/appContext';
 import { Location } from 'src/renderer/components/location/location';
 import { CurrentWeather } from 'src/renderer/components/weather/currentWeather';
-import Search from 'src/renderer/components/search/search';
-import { ForecastContextProvider } from 'src/renderer/context/forecastContext';
-import Units from './components/units/units';
+import {
+  WeatherContext,
+  WeatherContextProvider,
+} from 'src/renderer/context/weatherContext';
+import { DaylightInfo } from './components/weather/daylightInfo';
+import Menu from 'src/renderer/components/menu/menu';
+import { GeolocationPositionType } from './data/types';
 
 function App() {
   const appCtx = useContext(AppContext);
   const isLoading = appCtx.isLoading;
 
   return (
-    <ForecastContextProvider>
-      <div className="header">
-        <Search />
-        <Units />
-      </div>
-      <div className="main">
+    <AppContextProvider>
+      <WeatherContextProvider>
+        <Menu />
         {!isLoading ? (
           <>
             <Location />
-            <CurrentWeather />
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+              <CurrentWeather />
+              <DaylightInfo />
+            </div>
           </>
         ) : (
           <span>loading...</span>
         )}
-      </div>
-    </ForecastContextProvider>
+      </WeatherContextProvider>
+    </AppContextProvider>
   );
 }
 
