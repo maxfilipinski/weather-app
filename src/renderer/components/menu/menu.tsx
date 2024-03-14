@@ -1,20 +1,11 @@
-import {
-  AppBar,
-  Box,
-  InputBase,
-  Toolbar,
-  Typography,
-  alpha,
-  styled,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import Search from 'src/renderer/components/search/search';
 import Units from '../units/units';
 
 export default function Menu() {
   return (
-    <Box sx={{ width: '100%' }}>
-      <AppBar position="static" enableColorOnDark>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
         <Toolbar variant="dense">
           <Typography
             variant="h6"

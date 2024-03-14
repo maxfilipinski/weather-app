@@ -26,7 +26,9 @@ export const CurrentWeather = () => {
   console.log(forecastCtx.currentWeatherData);
 
   return (
-    <Card>
+    <Card
+      style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)', color: 'white' }}
+    >
       <CardHeader
         title={<Typography>Current weather</Typography>}
         sx={{ paddingBottom: 0 }}

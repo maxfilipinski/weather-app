@@ -53,9 +53,10 @@ a:hover {
   text-decoration: none;
 }
 
-.Hello {
+.app__weather-content {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
+  flex-direction: row;
+  gap: 1rem;
+  width: fit-content;
+  margin: 1rem auto;
 }

@@ -1,15 +1,11 @@
 import './App.css';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import AppContextProvider, { AppContext } from './context/appContext';
 import { Location } from 'src/renderer/components/location/location';
 import { CurrentWeather } from 'src/renderer/components/weather/currentWeather';
-import {
-  WeatherContext,
-  WeatherContextProvider,
-} from 'src/renderer/context/weatherContext';
+import { WeatherContextProvider } from 'src/renderer/context/weatherContext';
 import { DaylightInfo } from './components/weather/daylightInfo';
 import Menu from 'src/renderer/components/menu/menu';
-import { GeolocationPositionType } from './data/types';
 
 function App() {
   const appCtx = useContext(AppContext);
@@ -22,7 +18,7 @@ function App() {
         {!isLoading ? (
           <>
             <Location />
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+            <div className="app__weather-content">
               <CurrentWeather />
               <DaylightInfo />
             </div>

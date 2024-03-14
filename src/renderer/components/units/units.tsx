@@ -1,22 +1,25 @@
+import './units.scss';
 import { useContext } from 'react';
+import { WeatherContext } from 'src/renderer/context/weatherContext';
+import weatherService from 'src/renderer/services/weatherService';
+import { TempUnitType } from 'src/renderer/data/types';
 import {
   FormControl,
   MenuItem,
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import {
-  WeatherContext,
-  TempUnitType,
-} from 'src/renderer/context/weatherContext';
-import './units.scss';
 
 export default function Units() {
-  const forecastCtx = useContext(WeatherContext);
+  const weatherCtx = useContext(WeatherContext);
 
   const onUnitChangeHandler = (event: SelectChangeEvent) => {
-    forecastCtx.setTempUnit(event.target.value as TempUnitType);
-    forecastCtx.fetchData();
+    const newTempUnit = event.target.value as TempUnitType;
+    weatherCtx.setTempUnit(newTempUnit);
+
+    weatherService
+      .fetchWeather(weatherCtx.location, newTempUnit)
+      .then((weather) => weatherCtx.setWeather(weather));
   };
 
   return (
@@ -24,7 +27,7 @@ export default function Units() {
       <Select
         className="select"
         id="temp-units"
-        value={forecastCtx.tempUnit}
+        value={weatherCtx.tempUnit}
         onChange={onUnitChangeHandler}
       >
         <MenuItem value={'metric'}>°C</MenuItem>

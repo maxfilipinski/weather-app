@@ -37,6 +37,9 @@ export const Location = () => {
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '0.75rem',
+        height: '48px',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        justifyContent: 'center',
       }}
     >
       <LocationCity />
