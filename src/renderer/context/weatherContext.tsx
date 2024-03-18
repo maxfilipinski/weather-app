@@ -52,6 +52,7 @@ const initialWeather: CurrentWeatherDataType = {
     sunrise: 0,
     sunset: 0,
   },
+  lastUpdate: 0,
 };
 
 const initialLocation: GeolocationPositionType = {

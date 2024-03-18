@@ -41,6 +41,7 @@ export type CurrentWeatherDataType = {
     sunrise: number;
     sunset: number;
   };
+  lastUpdate: number;
 };
 
 export type TempUnitType = 'metric' | 'imperial' | 'standard';

@@ -19,7 +19,9 @@ export default function Units() {
 
     weatherService
       .fetchWeather(weatherCtx.location, newTempUnit)
-      .then((weather) => weatherCtx.setWeather(weather));
+      .then((weather) =>
+        weatherCtx.setWeather({ ...weather, lastUpdate: Date.now() }),
+      );
   };
 
   return (

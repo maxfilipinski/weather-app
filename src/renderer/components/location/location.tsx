@@ -20,7 +20,7 @@ export const Location = () => {
         weatherService
           .fetchWeather(position, weatherCtx.tempUnit)
           .then((weather) => {
-            weatherCtx.setWeather(weather);
+            weatherCtx.setWeather({ ...weather, lastUpdate: Date.now() });
           });
       },
       (error) => {

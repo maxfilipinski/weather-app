@@ -5,25 +5,26 @@ import {
   TempUnitSymbol,
 } from 'src/renderer/context/weatherContext';
 import NorthIcon from '@mui/icons-material/North';
+import formatTime from 'src/renderer/utils/formatTime';
 
 export const CurrentWeather = () => {
-  const forecastCtx = useContext(WeatherContext);
-  const weather = forecastCtx.currentWeatherData.weather[0];
-  const temperature = Math.round(forecastCtx.currentWeatherData.main.temp);
+  const weatherCtx = useContext(WeatherContext);
+  const weather = weatherCtx.currentWeatherData.weather[0];
+  const temperature = Math.round(weatherCtx.currentWeatherData.main.temp);
   const tempFeelsLike = Math.round(
-    forecastCtx.currentWeatherData.main.feels_like,
+    weatherCtx.currentWeatherData.main.feels_like,
   );
-  const tempMax = Math.round(forecastCtx.currentWeatherData.main.temp_max);
-  const tempMin = Math.round(forecastCtx.currentWeatherData.main.temp_min);
-  const tempUnit = TempUnitSymbol[forecastCtx.tempUnit];
+  const tempMax = Math.round(weatherCtx.currentWeatherData.main.temp_max);
+  const tempMin = Math.round(weatherCtx.currentWeatherData.main.temp_min);
+  const tempUnit = TempUnitSymbol[weatherCtx.tempUnit];
   const windSpeed =
-    forecastCtx.tempUnit === 'imperial'
-      ? `${forecastCtx.currentWeatherData.wind.speed} mph`
-      : `${Math.round(forecastCtx.currentWeatherData.wind.speed * 3.6)} kph`;
-  const main = forecastCtx.currentWeatherData.main;
-  const visibility = forecastCtx.currentWeatherData.visibility / 1000;
+    weatherCtx.tempUnit === 'imperial'
+      ? `${weatherCtx.currentWeatherData.wind.speed} mph`
+      : `${Math.round(weatherCtx.currentWeatherData.wind.speed * 3.6)} kph`;
+  const main = weatherCtx.currentWeatherData.main;
+  const visibility = weatherCtx.currentWeatherData.visibility / 1000;
 
-  console.log(forecastCtx.currentWeatherData);
+  console.log(weatherCtx.currentWeatherData);
 
   return (
     <Card
@@ -31,6 +32,11 @@ export const CurrentWeather = () => {
     >
       <CardHeader
         title={<Typography>Current weather</Typography>}
+        subheader={
+          <Typography fontSize="0.9em" color="text.secondary">
+            {formatTime(new Date(weatherCtx.currentWeatherData.lastUpdate))}
+          </Typography>
+        }
         sx={{ paddingBottom: 0 }}
       />
       <CardContent sx={{ padding: '16px !important' }}>
@@ -101,7 +107,7 @@ export const CurrentWeather = () => {
               <NorthIcon
                 fontSize="inherit"
                 sx={{
-                  transform: `rotate(${180 + forecastCtx.currentWeatherData.wind.deg}deg)`,
+                  transform: `rotate(${180 + weatherCtx.currentWeatherData.wind.deg}deg)`,
                 }}
               />
             </Box>

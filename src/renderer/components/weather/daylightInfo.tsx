@@ -9,6 +9,7 @@ import {
 import { useContext } from 'react';
 import { WeatherContext } from 'src/renderer/context/weatherContext';
 import WbTwilightIcon from '@mui/icons-material/WbTwilight';
+import formatTime from 'src/renderer/utils/formatTime';
 
 export const DaylightInfo = () => {
   const forecastCtx = useContext(WeatherContext);
@@ -26,15 +27,9 @@ export const DaylightInfo = () => {
       ? 100
       : 100 - ((sunset.valueOf() - Date.now()) / daylight) * 100;
 
-  const formatTime = (value: Date): string =>
-    value.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-
   return (
     <Card
-      style={{ backgroundColor: 'rgba(255, 255, 255, 0.09)', color: 'white' }}
+      style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)', color: 'white' }}
     >
       <CardHeader title={<Typography>Sun/Moon</Typography>} />
       <CardContent>

@@ -5,7 +5,7 @@ import Units from '../units/units';
 export default function Menu() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color="default" enableColorOnDark>
         <Toolbar variant="dense">
           <Typography
             variant="h6"
