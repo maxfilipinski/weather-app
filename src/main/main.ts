@@ -25,7 +25,7 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-process.env.GOOGLE_API_KEY = 'AIzaSyC8nYxN9Gw1KhIUYLj-i24PbJuMu4Je-pA';
+process.env.GOOGLE_API_KEY = 'AIzaSyBluAbFGT8MkdX8FDp_oW0rfpAsUxlmnZA';
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;

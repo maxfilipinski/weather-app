@@ -1,0 +1,18 @@
+.card {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.card__content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.content__icon--light {
+  color: #fbc02d;
+}
+
+.content__icon--dark {
+  color: #424242;
+}

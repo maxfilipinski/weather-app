@@ -5,11 +5,25 @@ import {
   CardHeader,
   LinearProgress,
   Typography,
+  linearProgressClasses,
+  styled,
 } from '@mui/material';
 import { useContext } from 'react';
 import { WeatherContext } from 'src/renderer/context/weatherContext';
 import WbTwilightIcon from '@mui/icons-material/WbTwilight';
 import formatTime from 'src/renderer/utils/formatTime';
+import styles from './daylightInfo.module.scss';
+import 'src/renderer/App.css';
+
+const StyledLinearProgress = styled(LinearProgress)(() => ({
+  width: '100%',
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: '#757575',
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    backgroundColor: '#fbc02d',
+  },
+}));
 
 export const DaylightInfo = () => {
   const forecastCtx = useContext(WeatherContext);
@@ -26,46 +40,34 @@ export const DaylightInfo = () => {
     Date.now() > sunset.valueOf()
       ? 100
       : 100 - ((sunset.valueOf() - Date.now()) / daylight) * 100;
+  const daylightProgressText = `${daylightTotalHrs} hr ${daylightTotalMins} min`;
 
   return (
-    <Card
-      style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)', color: 'white' }}
-    >
-      <CardHeader title={<Typography>Sun/Moon</Typography>} />
+    <Card className={styles.card}>
+      <CardHeader title={<Typography>Sun</Typography>} />
       <CardContent>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.75rem',
-            textAlign: 'center',
-          }}
-        >
+        <Box className={styles.card__content}>
           <Box>
-            <WbTwilightIcon fontSize="large" sx={{ color: 'orange' }} />
+            <WbTwilightIcon
+              fontSize="large"
+              className={styles['content__icon--light']}
+            />
             <Typography color="text.secondary">Sunrise</Typography>
-            <Box sx={{ fontWeight: 'bold' }}>{formatTime(sunrise)}</Box>
+            <Box className="app__text--bold">{formatTime(sunrise)}</Box>
           </Box>
-          <Box
-            style={{
-              textAlign: 'center',
-            }}
-          >
-            <LinearProgress
+          <Box>
+            <StyledLinearProgress
               variant="determinate"
               value={daylightProgress}
-              sx={{
-                width: '100px',
-              }}
             />
-            <Typography
-              sx={{ fontWeight: 'bold' }}
-            >{`${daylightTotalHrs} h ${daylightTotalMins} mins`}</Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>
+              {daylightProgressText}
+            </Typography>
           </Box>
           <Box>
-            <WbTwilightIcon fontSize="large" sx={{ color: 'gray' }} />
+            <WbTwilightIcon fontSize="large" className="content__icon--dark" />
             <Typography color="text.secondary">Sunset</Typography>
-            <Box sx={{ fontWeight: 'bold' }}>{formatTime(sunset)}</Box>
+            <Box className="app__text--bold">{formatTime(sunset)}</Box>
           </Box>
         </Box>
       </CardContent>

@@ -12,22 +12,22 @@ export const Location = () => {
       ? `${weatherCtx.currentWeatherData.name}, ${weatherCtx.currentWeatherData.sys?.country}`
       : '';
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        weatherCtx.setLocation(position);
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       weatherCtx.setLocation(position);
 
-        weatherService
-          .fetchWeather(position, weatherCtx.tempUnit)
-          .then((weather) => {
-            weatherCtx.setWeather({ ...weather, lastUpdate: Date.now() });
-          });
-      },
-      (error) => {
-        alert('Cannot fetch current location');
-      },
-    );
-  }, []);
+  //       weatherService
+  //         .fetchWeather(position, weatherCtx.tempUnit)
+  //         .then((weather) => {
+  //           weatherCtx.setWeather({ ...weather, lastUpdate: Date.now() });
+  //         });
+  //     },
+  //     (error) => {
+  //       alert('Cannot fetch current location');
+  //     },
+  //   );
+  // }, []);
 
   return (
     <Typography

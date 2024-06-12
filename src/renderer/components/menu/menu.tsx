@@ -1,6 +1,6 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import Search from 'src/renderer/components/search/search';
-import Units from '../units/units';
+import Search from 'src/renderer/components/Search/Search';
+import Units from '../Units/Units';
 
 export default function Menu() {
   return (

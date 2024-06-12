@@ -6,6 +6,8 @@ import {
 } from 'src/renderer/context/weatherContext';
 import NorthIcon from '@mui/icons-material/North';
 import formatTime from 'src/renderer/utils/formatTime';
+import styles from './currentWeather.module.scss';
+import 'src/renderer/App.css';
 
 export const CurrentWeather = () => {
   const weatherCtx = useContext(WeatherContext);
@@ -20,24 +22,20 @@ export const CurrentWeather = () => {
   const windSpeed =
     weatherCtx.tempUnit === 'imperial'
       ? `${weatherCtx.currentWeatherData.wind.speed} mph`
-      : `${Math.round(weatherCtx.currentWeatherData.wind.speed * 3.6)} kph`;
+      : `${Math.round(weatherCtx.currentWeatherData.wind.speed * 3.6)} km/h`;
   const main = weatherCtx.currentWeatherData.main;
   const visibility = weatherCtx.currentWeatherData.visibility / 1000;
 
-  console.log(weatherCtx.currentWeatherData);
-
   return (
-    <Card
-      style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)', color: 'white' }}
-    >
+    <Card className={styles.card}>
       <CardHeader
+        className={styles.card__header}
         title={<Typography>Current weather</Typography>}
         subheader={
           <Typography fontSize="0.9em" color="text.secondary">
             {formatTime(new Date(weatherCtx.currentWeatherData.lastUpdate))}
           </Typography>
         }
-        sx={{ paddingBottom: 0 }}
       />
       <CardContent sx={{ padding: '16px !important' }}>
         <Box
@@ -116,19 +114,19 @@ export const CurrentWeather = () => {
             <Typography fontSize="0.8em" color="text.secondary">
               Pressure
             </Typography>
-            <Box sx={{ fontWeight: 'bold' }}>{main.pressure} hPa</Box>
+            <Box className="app__text--bold">{main.pressure} hPa</Box>
           </Box>
           <Box>
             <Typography fontSize="0.8em" color="text.secondary">
               Humidity
             </Typography>
-            <Box sx={{ fontWeight: 'bold' }}>{main.humidity}%</Box>
+            <Box className="app__text--bold">{main.humidity}%</Box>
           </Box>
           <Box>
             <Typography fontSize="0.8em" color="text.secondary">
               Visibility
             </Typography>
-            <Box sx={{ fontWeight: 'bold' }}>{visibility} km</Box>
+            <Box className="app__text--bold">{visibility} km</Box>
           </Box>
         </Box>
       </CardContent>

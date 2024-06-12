@@ -1,11 +1,11 @@
 import './App.css';
 import { useContext } from 'react';
 import AppContextProvider, { AppContext } from './context/appContext';
-import { Location } from 'src/renderer/components/location/location';
-import { CurrentWeather } from 'src/renderer/components/weather/currentWeather';
+import { Location } from 'src/renderer/components/Location/Location';
+import { CurrentWeather } from 'src/renderer/components/Weather/CurrentWeather/CurrentWeather';
 import { WeatherContextProvider } from 'src/renderer/context/weatherContext';
-import { DaylightInfo } from './components/weather/daylightInfo';
-import Menu from 'src/renderer/components/menu/menu';
+import { DaylightInfo } from 'src/renderer/components/Weather/DaylightInfo/DaylightInfo';
+import Menu from 'src/renderer/components/Menu/Menu';
 
 function App() {
   const appCtx = useContext(AppContext);
