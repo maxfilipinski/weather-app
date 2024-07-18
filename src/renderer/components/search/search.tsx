@@ -1,72 +1,39 @@
+import './Search.scss';
 import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react';
 import { AppContext } from 'src/renderer/context/appContext';
 import { WeatherContext } from 'src/renderer/context/weatherContext';
-import * as config from 'src/renderer/config';
-import { styled, alpha, InputBase } from '@mui/material';
+import { InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import * as config from 'src/renderer/config';
 
-const SearchBase = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-  minHeight: '40px',
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
-
-export default function Search() {
+export const Search = () => {
   const appCtx = useContext(AppContext);
   const forecastCtx = useContext(WeatherContext);
   const [searchQuery, setSearchQuery] = useState('');
 
   const fetchData = async (location = { lat: 0, lon: 0 }) => {
     appCtx.setIsLoading(true);
-    const url =
-      location.lat && location.lon
-        ? `${config.API_URL}?lat=${location.lat}&lon=${location.lon}&units=${forecastCtx.tempUnit}&appid=${config.API_KEY}`
-        : `${config.API_URL}?q=${searchQuery}&units=${forecastCtx.tempUnit}&appid=${config.API_KEY}`;
 
-    await fetch(url)
-      .then((res) => res.json())
-      .then((res) => {
-        appCtx.setIsLoading(false);
-        forecastCtx.setWeather(res);
-        setSearchQuery('');
-      });
+    try {
+      const url =
+        location.lat && location.lon
+          ? `${config.API_URL}?lat=${location.lat}&lon=${location.lon}&units=${forecastCtx.tempUnit}&appid=${config.API_KEY}`
+          : `${config.API_URL}?q=${searchQuery}&units=${forecastCtx.tempUnit}&appid=${config.API_KEY}`;
+
+      await fetch(url)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.cod !== '404') {
+            appCtx.setIsLoading(false);
+            forecastCtx.setWeather(res);
+          }
+
+          setSearchQuery('');
+        });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      appCtx.setIsLoading(false);
+    }
   };
 
   const onKeyDownHandler = (event: KeyboardEvent) => {
@@ -80,17 +47,17 @@ export default function Search() {
   };
 
   return (
-    <SearchBase>
-      <SearchIconWrapper>
+    <div className="search">
+      <div className="search__icon">
         <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ 'aria-label': 'search' }}
+      </div>
+      <InputBase
+        className="search__input"
+        placeholder="Search..."
         value={searchQuery}
         onKeyDown={onKeyDownHandler}
         onChange={onChangeHandler}
       />
-    </SearchBase>
+    </div>
   );
-}
+};

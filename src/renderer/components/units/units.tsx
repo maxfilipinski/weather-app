@@ -1,5 +1,5 @@
-import './units.scss';
-import { useContext } from 'react';
+import './Units.scss';
+import { useCallback, useContext } from 'react';
 import { WeatherContext } from 'src/renderer/context/weatherContext';
 import weatherService from 'src/renderer/services/weatherService';
 import { TempUnitType } from 'src/renderer/data/types';
@@ -10,27 +10,35 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 
-export default function Units() {
-  const weatherCtx = useContext(WeatherContext);
+export const Units = () => {
+  const { tempUnit, setTempUnit, location, setWeather } =
+    useContext(WeatherContext);
 
-  const onUnitChangeHandler = (event: SelectChangeEvent) => {
-    const newTempUnit = event.target.value as TempUnitType;
-    weatherCtx.setTempUnit(newTempUnit);
+  const onUnitChange = useCallback(
+    async (event: SelectChangeEvent) => {
+      const newTempUnit = event.target.value as TempUnitType;
+      setTempUnit(newTempUnit);
 
-    weatherService
-      .fetchWeather(weatherCtx.location, newTempUnit)
-      .then((weather) =>
-        weatherCtx.setWeather({ ...weather, lastUpdate: Date.now() }),
-      );
-  };
+      try {
+        weatherService
+          .fetchWeather(location, newTempUnit)
+          .then((weather) =>
+            setWeather({ ...weather, lastUpdate: Date.now() }),
+          );
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    },
+    [setTempUnit, location, setWeather],
+  );
 
   return (
-    <FormControl size="small">
+    <FormControl size="small" className="units">
       <Select
-        className="select"
+        className="units__select"
         id="temp-units"
-        value={weatherCtx.tempUnit}
-        onChange={onUnitChangeHandler}
+        value={tempUnit}
+        onChange={onUnitChange}
       >
         <MenuItem value={'metric'}>°C</MenuItem>
         <MenuItem value={'imperial'}>°F</MenuItem>
@@ -38,4 +46,4 @@ export default function Units() {
       </Select>
     </FormControl>
   );
-}
+};

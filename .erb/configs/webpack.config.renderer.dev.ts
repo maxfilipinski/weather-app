@@ -162,8 +162,6 @@ const configuration: webpack.Configuration = {
       isDevelopment: process.env.NODE_ENV !== 'production',
       nodeModules: webpackPaths.appNodeModulesPath,
     }),
-
-    new webpack.HotModuleReplacementPlugin(),
   ],
 
   node: {

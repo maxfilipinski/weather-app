@@ -1,0 +1,38 @@
+.search {
+  position: relative;
+  border-radius: 4px;
+  background-color: rgba($color: white, $alpha: 0.15);
+  margin-left: 0.25rem;
+  width: auto;
+  min-height: 40px;
+
+  &:hover {
+    background-color: rgba($color: white, $alpha: 0.25);
+  }
+
+  .search__icon {
+    padding: 0 16px;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search__input {
+    color: inherit;
+    width: 100%;
+
+    .MuiInputBase-input {
+      padding: 8px 8px 8px 0;
+      padding-left: calc(1em + 32px);
+      transition: width 300ms ease-in-out;
+      width: 10vw;
+
+      &:focus {
+        width: 15vw;
+      }
+    }
+  }
+}

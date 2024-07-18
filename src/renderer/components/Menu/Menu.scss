@@ -1,0 +1,10 @@
+.menu {
+  &__title {
+    flex-grow: 1;
+  }
+
+  .MuiToolbar-root {
+    padding-left: 1rem;
+    padding-right: 0.25rem;
+  }
+}

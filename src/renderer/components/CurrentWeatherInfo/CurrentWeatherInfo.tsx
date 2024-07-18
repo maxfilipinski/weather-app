@@ -7,9 +7,9 @@ import {
 import NorthIcon from '@mui/icons-material/North';
 import formatTime from 'src/renderer/utils/formatTime';
 import styles from './currentWeather.module.scss';
-import 'src/renderer/App.css';
+import 'src/renderer/App.scss';
 
-export const CurrentWeather = () => {
+export const CurrentWeatherInfo = () => {
   const weatherCtx = useContext(WeatherContext);
   const weather = weatherCtx.currentWeatherData.weather[0];
   const temperature = Math.round(weatherCtx.currentWeatherData.main.temp);

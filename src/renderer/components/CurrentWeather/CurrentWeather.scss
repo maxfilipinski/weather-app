@@ -1,0 +1,10 @@
+.current-weather {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+
+  .current-weather__main-info {
+    display: flex;
+  }
+}

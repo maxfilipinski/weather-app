@@ -1,17 +1,18 @@
+import './Menu.scss';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import Search from 'src/renderer/components/Search/Search';
-import Units from '../Units/Units';
+import { Search } from 'src/renderer/components/Search/Search';
+import { Units } from '../Units/Units';
 
-export default function Menu() {
+export const Menu = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box className="menu">
       <AppBar position="static" color="default" enableColorOnDark>
         <Toolbar variant="dense">
           <Typography
+            className="menu__title"
             variant="h6"
-            noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            noWrap
           >
             Forecast
           </Typography>
@@ -21,4 +22,4 @@ export default function Menu() {
       </AppBar>
     </Box>
   );
-}
+};

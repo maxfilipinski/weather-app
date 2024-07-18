@@ -13,7 +13,7 @@ import { WeatherContext } from 'src/renderer/context/weatherContext';
 import WbTwilightIcon from '@mui/icons-material/WbTwilight';
 import formatTime from 'src/renderer/utils/formatTime';
 import styles from './daylightInfo.module.scss';
-import 'src/renderer/App.css';
+import 'src/renderer/App.scss';
 
 const StyledLinearProgress = styled(LinearProgress)(() => ({
   width: '100%',
